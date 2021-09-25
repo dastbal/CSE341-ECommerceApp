@@ -1,0 +1,12 @@
+body{
+    background-color: rgb(213, 232, 248);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}main{
+    margin: 0 5% ;
+    width: 90%;
+}
+.active{
+    color: red;
+}

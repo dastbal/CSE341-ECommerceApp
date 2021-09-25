@@ -1,0 +1,24 @@
+<%- include('includes/head.ejs') %> 
+</head>
+<body>
+    <%- include('includes/navigation.ejs') %> 
+    
+    
+    <main>
+        <h2>Add your favorite Pizza</h2>
+        <form action="/admin/add-pizza" method="POST">
+            <label for="title">
+                Title
+
+                <input type="text" name="title" id="title">
+            </label>
+            <label for="price">
+                Price
+
+                <input type="text" name="price" id="price">
+            </label>
+            <button type="submit"> Add</button>
+        </form>
+    </main>
+    
+    <%- include('includes/end.ejs') %> 
