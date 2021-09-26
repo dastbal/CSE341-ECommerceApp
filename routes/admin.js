@@ -16,10 +16,21 @@ router.get('/add-pizza',(req,res,next)=>{
 })
 router.post('/add-pizza',(req,res,next)=>{
     console.log('Pizza added')
-    pizzas.push({title: req.body.title , price : req.body.price});
+    pizzas.push({title: req.body.title , price : req.body.price , description : req.body.description});
     console.log(pizzas);
     res.redirect('/');
 
+})
+router.post('/delete-pizza',(req,res,next)=>{
+    console.log('Pizza deleted')
+    console.log(req.body.id)
+    
+    pizzas = pizzas.filter((pizza)=>{
+          pizza.title != req.body.id
+    })
+    
+    console.log(pizzas);
+    res.redirect('/');
 })
 
 exports.routes= router;;

@@ -19,12 +19,16 @@
                     </div>
                     <div class="card__body">
                         <h2 class="pizza-price">
-                            <%= pizza.price %> 
+                           Precio :  <%= pizza.price %> 
                     </h2>
-                    <p class="pizza-description">Cheese</p>
+                    <p class="pizza-description"><%= pizza.description %> </p>
                 </div>
                 <div class="card__action">
-                    <button class="btn"> Add a New Pizza</button>
+                    <form action="/admin/delete-pizza" method="POST">
+                        <input type="hidden" name="id"  value="<%= pizza.title %> ">
+                        <button class="btn"> Add </button>
+                        <button type="submit" class="btn">Delete</button>
+                    </form>
                 </div>
             </article>
             <% }) %>

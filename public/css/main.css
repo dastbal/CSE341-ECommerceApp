@@ -4,10 +4,89 @@ body{
     width: 100%;
     margin: 0;
     padding: 0;
-}main{
-    margin: 0 5% ;
-    width: 90%;
+}
+header{
+    margin: 0;
+    padding: 1.5rem;
+    background-color: black;
+    font-size: 1.5rem;
+}
+ul{
+    display: flex;
+}
+li{
+    list-style: none;
+    margin-right: 1rem;
+}
+li a{
+    color: orange;
+    text-decoration: none;
+}
+main{
+    
+
+    margin: 0 20% ;
+    width: 60%;
+    max-width: 900px;
+}
+main h2 { 
+    text-align: center;
+    font-size: 1.6rem;
 }
 .active{
     color: red;
+}
+form{
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20%;
+}
+form label {
+
+    
+    padding: 1rem 0;
+    
+    
+}
+form input{
+    display: block;
+    width: 100%;
+}
+button{
+    border-radius: 1rem;
+    padding: 0.4rem 2rem;
+}
+button:hover{
+    background-color: orange;
+}
+.grid{
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+
+}
+.card{
+    border: 2px black solid;
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+justify-content: center;}
+.card h2, .card p{
+    text-align: center;
+}
+.card img{
+    width: 100%;
+}
+.card__action{
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+.card__action form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.btn{
+    padding: 1rem 1rem;
 }
