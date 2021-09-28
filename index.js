@@ -3,7 +3,7 @@ const path  = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const port = Process.env.PORT || 3000 ;
+const PORT = Process.env.PORT || 3000 ;
 
 
 const app = express();
@@ -30,5 +30,5 @@ app.use(errorController.get404);
 
 
 
-app.listen(port);
+app.listen(PORT);
 
