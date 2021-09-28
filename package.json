@@ -2,9 +2,10 @@
   "name": "node",
   "version": "1.0.0",
   "description": "��#\u0000 \u0000c\u0000s\u0000e\u00003\u00004\u00001\u0000\r\u0000 \u0000",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "s": "nodemon index.js"
   },
   "author": "David Balladares <davidxsteven@gmail.com>",
   "license": "ISC",
