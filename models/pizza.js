@@ -23,6 +23,7 @@ module.exports = class Pizza{
     }
     
     save(){
+        this.id = Math.random().toString();
         getPizzasFromFile( pizzas=>{
             pizzas.push(this);
             fs.writeFile(p,JSON.stringify(pizzas),(e)=>{
@@ -35,6 +36,14 @@ module.exports = class Pizza{
     }
     static fetchAll(cb){
         getPizzasFromFile(cb);
+    }
+
+    static finById(id,cb){
+        getPizzasFromFile(pizzas =>{
+            const pizza = pizzas.find(p=> p.id == id);
+            cb(pizza);
+        })
+
     }
     // static delete(id){
         //     const x= pizzas.filter((pizza)=>{

@@ -2,7 +2,7 @@ const Pizza = require('../models/pizza')
 exports.getAddPizza = (req,res,next)=>{
     console.log('Adding something');
     //res.sendFile(path.join(rootDir,"views","add-pizza.html"))
-    res.render("add-pizza",{
+    res.render("admin/add-pizza",{
         docTitle: "Add Pizza" ,
         path : "/admin/add-pizza"
     });
@@ -20,25 +20,15 @@ exports.postAddPizza =(req,res,next)=>{
     res.redirect('/');
 }
 
-// exports.postDeletePizza =(req,res,next)=>{
-//     // pizzas = pizzas.filter((pizza)=>{ 
-//         //  pizza.title != req.body.id
-//         // });
-//         console.log('Pizza deleted')
-//         console.log(req.body.id)
-//         const id = req.body.id
-//         const pizzas= Pizza.delete(id);
-//         console.log(pizzas);
-//         res.redirect('/');
-    
-    
-// }
-exports.getPizzas =(req,res,next)=>{
-    // console.log("shop.js",adminData.pizzas);
-    // res.sendFile(path.join(rootDir,"views","shop.html"))
+exports.getPizza =(req,res,next)=>{
     Pizza.fetchAll(pizzas=>{
-        res.render('shop',{prods: pizzas ,docTitle: 'shop' ,path:"/"});
+        res.render('admin/pizzas',{prods: pizzas ,docTitle: 'Admin Pizzas' ,path:"/admin/pizzas"});
 
     });
+}
+exports.getEditPizza =(req,res,next)=>{
+    Pizza.fetchAll(pizzas=>{
+        res.render('admin/edit-pizza',{prods: pizzas ,docTitle: 'Admin -Edit Pizza' ,path:"/admin/edit-pizza"});
 
+    });
 }

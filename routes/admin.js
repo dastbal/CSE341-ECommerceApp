@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 
 
-const pizzasController = require('../controllers/pizzas');
+const adminController = require('../controllers/admin');
 
 const router = express.Router();
 //const rootDir = require('../utils/path')
@@ -11,8 +11,10 @@ const router = express.Router();
 
 
 
-router.get('/add-pizza',pizzasController.getAddPizza)
-router.post('/add-pizza',pizzasController.postAddPizza)
+router.get('/add-pizza',adminController.getAddPizza)
+router.post('/add-pizza',adminController.postAddPizza)
+router.get('/pizzas',adminController.getPizza)
+router.get('/edit-pizza',adminController.getEditPizza)
 //router.post('/delete-pizza',pizzasController.postDeletePizza)
 
 exports.routes= router;;

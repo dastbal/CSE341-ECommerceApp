@@ -1,10 +1,21 @@
 
-const pizzasController = require('../controllers/pizzas');
+const shopController = require('../controllers/shop');
 
 const express = require('express');
 
 const router = express.Router();
 
-router.get('/',pizzasController.getPizzas)
+router.get('/',shopController.getIndex);
+
+router.get('/pizzas',shopController.getPizzas);
+
+router.get('/pizzas/:pizzaId',shopController.getPizza)
+
+router.get('/cart',shopController.getCart)
+
+router.get('/checkout',shopController.getCheckout)
+
+router.get('/orders',shopController.getOrders)
+
 
 module.exports = router;

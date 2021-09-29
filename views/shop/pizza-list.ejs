@@ -1,7 +1,7 @@
-<%- include('includes/head.ejs') %> 
+<%- include('../includes/head.ejs') %> 
 </head>
 <body>
-    <%- include('includes/navigation.ejs')  %> 
+    <%- include('../includes/navigation.ejs')  %> 
     
     
     <main>
@@ -19,15 +19,16 @@
                     </div>
                     <div class="card__body">
                         <h2 class="pizza-price">
-                           Precio :  <%= pizza.price %> 
+                            $ <%= pizza.price %> 
                     </h2>
                     <p class="pizza-description"><%= pizza.description %> </p>
                 </div>
                 <div class="card__action">
-                    <form action="/admin/delete-pizza" method="POST">
-                        <input type="hidden" name="id"  value="<%= pizza.title %> ">
+                    <a href="/pizzas/<%= pizza.id %> " class="btn"> Details</a>
+
+                    <form action="/add-to-cart" method="POST">
+                        <input type="hidden" name="id"  value="<%= pizza.id %> ">
                         <button class="btn"> Add </button>
-                        <button type="submit" class="btn">Delete</button>
                     </form>
                 </div>
             </article>
@@ -39,4 +40,4 @@
             
         </main>
 
-    <%- include('includes/end.ejs')  %> 
+    <%- include('../includes/end.ejs')  %> 
