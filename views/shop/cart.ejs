@@ -2,4 +2,27 @@
 </head>
 <body>
     <%- include('../includes/navigation.ejs')  %> 
+    <main>
+        <% if (pizzas.length > 0) { %>
+            <ul>
+                <% pizzas.forEach(pizza => { %>
+                    <li>
+                        <p>
+                            <%= pizza.quantity %> <%= pizza.data.title %> 
+
+                        </p>  
+                        <form action="/cart-delete-pizza" method="post">
+                        <input type="hidden" name="id" value="<%= pizza.data.id%>" >
+                        <button class="btn" type="submit"> Delete</button>
+                        </form>
+                      </li> 
+                 
+                <% }) %>
+            </ul>
+         
+        <% } else{ %>
+            <h2>No Pizzas In Your Cart</h2>
+
+             <% } %>
+    </main>
     <%- include('../includes/end.ejs')  %> 

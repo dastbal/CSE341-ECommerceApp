@@ -14,7 +14,9 @@ const router = express.Router();
 router.get('/add-pizza',adminController.getAddPizza)
 router.post('/add-pizza',adminController.postAddPizza)
 router.get('/pizzas',adminController.getPizza)
-router.get('/edit-pizza',adminController.getEditPizza)
+router.get('/edit-pizza/:id',adminController.getEditPizza)
+router.post('/edit-pizza', adminController.postEditPizza)
+router.post('/delete-pizza', adminController.postDeletePizza)
 //router.post('/delete-pizza',pizzasController.postDeletePizza)
 
 exports.routes= router;;

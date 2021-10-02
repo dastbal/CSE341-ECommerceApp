@@ -1,5 +1,45 @@
 <%- include('../includes/head.ejs') %> 
 </head>
 <body>
-    <%- include('../includes/navigation.ejs')  %> 
-    <%- include('../includes/end.ejs')  %> 
+    <%- include('../includes/navigation.ejs') %> 
+    
+    
+    <main>
+        <h2>Add your favorite Pizza</h2>
+        <form action="/admin/<% if (editing) { %>edit-pizza<% } else{ %>add-pizza<% } %> " method="POST">
+            <label for="title">
+                Title
+
+                <input type="text" name="title" id="title" value="<% if (editing) { %> <%= pizza.title %> <% } %>">
+            </label>
+            <label for="price">
+                Price
+
+                <input type="number" name="price"  step="0.01" id="price" value="<% if (editing) { %><%= pizza.price %> <% } %>">
+            </label>
+            <label for="description">
+                Description
+            </label>
+
+                <textarea   rows="5" name="description" id="description" >
+                <% if (editing) { %><%= pizza.description %> <% } %>
+                    
+                </textarea>
+
+                    <% if (editing) { %>
+                        <input  type="hidden" name="id" value="<%=pizza.id%>">
+                    <% } %>
+                    
+            <button type="submit"> 
+                <% if (editing) { %>
+                    Update Pizza
+                <% } %>
+                <% if (!editing) { %>
+                    Add Pizza
+                <% } %>
+                
+                
+        </form>
+    </main>
+    
+    <%- include('../includes/end.ejs') %> 

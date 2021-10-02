@@ -1,4 +1,5 @@
 const Pizza = require('../models/pizza')
+const Cart = require('../models/cart')
 
 
 // exports.postDeletePizza =(req,res,next)=>{
@@ -28,10 +29,10 @@ exports.getPizza =(req,res,next)=>{
     const pizzaId= req.params.pizzaId
     console.log(pizzaId);
     Pizza.finById(pizzaId,(pizza)=>{
+        res.render('shop/pizza-detail',{pizza :pizza ,docTitle: "Pizza Detail", path : "/pizzas"})
         console.log(pizza)
     })
     
-    res.redirect('/');
 
 
 }
@@ -54,11 +55,43 @@ exports.getCheckout =(req,res,next)=>{
 
 }
 exports.getCart =(req,res,next)=>{
-    // console.log("shop.js",adminData.pizzas);
-    // res.sendFile(path.join(rootDir,"views","shop.html"))
-   
-        res.render('shop/cart',{docTitle: 'cart' ,path:"/cart"});
+    Cart.getPizza((cart)=>{
+        Pizza.fetchAll(pizzas=>{
+            const cartPizzas=[];
+            for( pizza of pizzas){
+                const cartPizzaData = cart.pizzas.find(p=> p.id == pizza.id)
+                if(cartPizzaData){
+                    cartPizzas.push({data:pizza , quantity: cartPizzaData.quantity})
+                }
+            }
+            
+            res.render('shop/cart',{
+                docTitle: 'cart' ,
+                path:"/cart",
+                pizzas: cartPizzas,
+            });
 
+        })
+
+    })
+   
+
+    
+
+}
+exports.postCart =(req,res,next)=>{
+    const pizzaId= parseInt(req.body.id);
+    
+    Pizza.finById(pizzaId,(pizza)=>{
+        console.log(pizza.price);
+        Cart.addPizza(pizzaId, pizza.price)
+    })
+    
+
+    
+
+    res.redirect('/cart')
+   
     
 
 }
@@ -70,4 +103,12 @@ exports.getOrders =(req,res,next)=>{
 
     
 
+}
+exports.postCartDeletePizza =(req,res,next)=>{ 
+    const pizzaId = parseInt(req.body.id);
+    Pizza.finById(pizzaId,(pizza)=>{
+
+        Cart.deletePizza(pizzaId,pizza.price);
+        res.redirect('/cart')
+    })
 }
