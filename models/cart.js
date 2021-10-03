@@ -39,6 +39,7 @@ module.exports = class Cart{
             let updatedCart= { ...JSON.parse(fileContent)};
             let pizza =updatedCart.pizzas.filter( p=>  p.id == id);
             pizza = pizza[0]
+            if(!pizza){ return;}
             const pizzaQuantity = pizza.quantity;
             updatedCart.pizzas =updatedCart.pizzas.filter(p=> p.id != id );
             updatedCart.totalPrice -=   price*pizzaQuantity;
