@@ -3,8 +3,10 @@ const path  = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-
-const port = Process.env.PORT || 3000 ;
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
 //const port = 3000 ;
 
 
