@@ -40,7 +40,7 @@ exports.getIndex =(req,res,next)=>{
     // console.log("shop.js",adminData.pizzas);
     // res.sendFile(path.join(rootDir,"views","shop.html"))
     Pizza.fetchAll(pizzas=>{
-        res.render('shop/index',{prods: pizzas ,docTitle: 'shop' ,path:"/pizzas"});
+        res.render('shop/index',{prods: pizzas ,docTitle: 'shop' ,path:"/"});
 
     });
 

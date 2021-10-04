@@ -1,5 +1,4 @@
-After completing the assignment, be sure to push to Github and Heroku.
-Please answer the questions in this text file and submit it to I-Learn.
+
 
 1. Copy and paste the URL for your web application (e.g., Heroku):
 
@@ -7,28 +6,32 @@ https://cse341ecommerceapp.herokuapp.com/
 
 2. Copy and paste the URL for your source code repository (e.g., GitHub):
 
-https://github.com/dastbal/CSE341-ECommerceApp/tree/main
+https://github.com/dastbal/CSE341-ECommerceApp
 
 3. Briefly list and describe the elements of the application that are functioning. 
 
-all in the video and I added more input to show the data
+All that is explained in the video it is working,  I am use  a theme of pizza
 
 4. Briefly describe any pieces of the assignment that are not yet working correctly.
 
-I wanted to add the button to remove but it is not workin well
+all is working
 
 5. Briefly describe the "coolest" thing you learned while completing this assignment.
- express it is beiing cool
+
+I learned how to use better teh debbuger in node beacuse I had a lot of issues and how to use heroku because  i cannot to deploy it , but  finally I got it
 
 6. If you could change this assignment to be more effective or helpful, what would you change?
 
 nothing
 
 7. Please select the category you feel best describes your assignment:
-   
+
    5 - Shows creativity and excels above and beyond requirements
 
 8. Provide a brief justification (1-2 sentences) for selecting that category.
 
+I follow the videos using other theme  and try to write the code in my way.
 
-I added to more inmput to accept more n¡information to display  and tried to remove the cards and create  the toute for that
+
+
+zh4K6CWu4XnwhoC1
