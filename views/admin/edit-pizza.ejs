@@ -10,12 +10,12 @@
             <label for="title">
                 Title
 
-                <input type="text" name="title" id="title" value="<% if (editing) { %> <%= pizza.title %> <% } %>">
+                <input type="text" required name="title" id="title" value="<% if (editing) { %> <%= pizza.title %> <% } %>">
             </label>
             <label for="price">
                 Price
 
-                <input type="number" name="price"  step="0.01" id="price" value="<% if (editing) { %><%= pizza.price %> <% } %>">
+                <input type="number"  required name="price"  step="0.01" id="price" value="<% if (editing) { %><%= pizza.price %> <% } %>">
             </label>
             <label for="description">
                 Description
@@ -27,7 +27,7 @@
                 </textarea>
 
                     <% if (editing) { %>
-                        <input  type="hidden" name="id" value="<%=pizza.id%>">
+                        <input  type="hidden" name="id" value="<%=pizza._id%>">
                     <% } %>
                     
             <button type="submit"> 

@@ -7,18 +7,22 @@
             <ul>
                 <% pizzas.forEach(pizza => { %>
                     <li>
-                        <p>
-                            <%= pizza.quantity %> <%= pizza.data.title %> 
-
-                        </p>  
+                        <h2><%= pizza.title %> </h2>
+                        <h3><%= pizza.quantity %></h3>
+                        
                         <form action="/cart-delete-pizza" method="post">
-                        <input type="hidden" name="id" value="<%= pizza.data.id%>" >
+                        <input type="hidden" name="id" value="<%= pizza._id%>" >
                         <button class="btn" type="submit"> Delete</button>
                         </form>
                       </li> 
                  
                 <% }) %>
             </ul>
+            <hr>
+            <form action="/create-order" method="post">
+                <button class="btn" type="submit"> Order Now!</button>
+                </form>
+
          
         <% } else{ %>
             <h2>No Pizzas In Your Cart</h2>
