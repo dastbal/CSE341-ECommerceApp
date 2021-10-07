@@ -7,11 +7,11 @@
             <ul>
                 <% pizzas.forEach(pizza => { %>
                     <li>
-                        <h2><%= pizza.title %> </h2>
+                        <h2><%= pizza.pizzaId.title %> </h2>
                         <h3><%= pizza.quantity %></h3>
                         
                         <form action="/cart-delete-pizza" method="post">
-                        <input type="hidden" name="id" value="<%= pizza._id%>" >
+                        <input type="hidden" name="id" value="<%= pizza.pizzaId._id%>" >
                         <button class="btn" type="submit"> Delete</button>
                         </form>
                       </li> 

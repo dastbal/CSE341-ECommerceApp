@@ -1,5 +1,5 @@
 const Pizza = require('../models/pizza')
-const Cart = require('../models/cart')
+const Order = require('../models/order')
 
 
 
@@ -7,8 +7,9 @@ const Cart = require('../models/cart')
 exports.getPizzas =(req,res,next)=>{
     // console.log("shop.js",adminData.pizzas);
     // res.sendFile(path.join(rootDir,"views","shop.html"))
-    Pizza.fetchAll()
+    Pizza.find()
     .then(pizzas=>{
+        console.log(pizzas)
         res.render('shop/pizza-list',
         {prods: pizzas ,
             docTitle: 'shop' ,
@@ -24,7 +25,7 @@ exports.getPizzas =(req,res,next)=>{
 exports.getIndex =(req,res,next)=>{
     // console.log("shop.js",adminData.pizzas);
     // res.sendFile(path.join(rootDir,"views","shop.html"))
-    Pizza.fetchAll()
+    Pizza.find()
     .then(pizzas=>{
         res.render('shop/index',
         {prods: pizzas ,
@@ -44,7 +45,8 @@ exports.getPizza =(req,res,next)=>{
 
     const pizzaId= req.params.pizzaId
     console.log(pizzaId);
-    Pizza.findById(pizzaId).then((pizza)=>{
+    Pizza.findById(pizzaId)
+    .then((pizza)=>{
         res.render('shop/pizza-detail',
         {
             pizza :pizza ,
@@ -77,9 +79,11 @@ Pizza.findById(pizzaId)
 
 exports.getCart =(req,res,next)=>{
     req.user
-    .getCart()
-    .then(pizzas=>{
-        console.log(pizzas)
+    .populate('cart.items.pizzaId')
+    .then(user=>{
+        console.log(user.cart.items)
+        
+        const  pizzas =  user.cart.items;
         console.log('in get cart get')
         res.render('shop/cart',{
             path:'/cart',
@@ -94,7 +98,7 @@ exports.getCart =(req,res,next)=>{
 exports.postCartDeletePizza =(req,res,next)=>{ 
     const pizzaId= req.body.id
     req.user
-    .deletePizzaFromCart(pizzaId)
+    .removeFromCart(pizzaId)
     .then(result=>{
         res.redirect('/cart')
         
@@ -105,16 +109,37 @@ exports.postCartDeletePizza =(req,res,next)=>{
 
 exports.postOrder =(req,res,next)=>{
     req.user
-    .addOrder()
+    .populate('cart.items.pizzaId')
+    .then(user=>{
+        console.log(user.cart.items)
+        
+        const  pizzas =  user.cart.items.map(pizza=>{
+            return { 
+                pizzaData :{... pizza.pizzaId._doc }, 
+                quantity : pizza.quantity}
+        });
+        const order = new Order({
+            user:{
+                name: req.user.name,
+                userId : req.user
+            },
+            pizzas:pizzas
+    
+        })
+        return order.save();
+    })
     .then(r=>{
+        return req.user.clearCart();
+    })
+    .then(()=>{
         res.redirect('/orders');
     })
     .catch(e=>console.log(e))
 }
 exports.getOrders =(req,res,next)=>{
-    req.user
-    .getOrders()
+    Order.find({'user.userId': req.user._id})
     .then(orders=>{
+        console.log(orders)
         res.render('shop/orders',{
             path:'/orders',
             docTitle: 'Orders',

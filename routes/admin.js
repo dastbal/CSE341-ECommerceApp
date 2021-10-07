@@ -17,6 +17,5 @@ router.get('/pizzas',adminController.getPizzas)
 router.get('/edit-pizza/:id',adminController.getEditPizza)
 router.post('/edit-pizza', adminController.postEditPizza)
 router.post('/delete-pizza', adminController.postDeletePizza)
-//router.post('/delete-pizza',pizzasController.postDeletePizza)
 
 exports.routes= router;;

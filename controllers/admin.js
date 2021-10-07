@@ -15,9 +15,17 @@ exports.postAddPizza =(req,res,next)=>{
     const title = req.body.title;
     const price = parseInt(req.body.price);
     const description = req.body.description;
-    const pizza = new Pizza(title,price,description,null,req.user._id);
+    const imageUrl = req.body.imageUrl;
+    const pizza = new Pizza({
+        title:title,
+        price:price,
+        description : description,
+        imageUrl:imageUrl,
+        userId:req.user
+    });
     console.log('Pizza added')
-    pizza.save().then(r=>{
+    pizza
+    .save().then(r=>{
         console.log('created Pizza')
         res.redirect('/admin/pizzas');
         
@@ -29,7 +37,7 @@ exports.postAddPizza =(req,res,next)=>{
 
 
 exports.getPizzas =(req,res,next)=>{
-    Pizza.fetchAll()
+    Pizza.find()
     .then(pizzas=>{
         res.render('admin/pizzas',
         {
@@ -66,14 +74,19 @@ exports.postEditPizza = (req,res,next)=>{
     const updatedTitle = req.body.title;
     let updatedPrice = parseInt(req.body.price);
     const updatedDescription = req.body.description;
+    const updatedImageUrl = req.body.imageUrl;
     
-    console.log("editing the pizza");
     
-    const pizza = new Pizza(updatedTitle,updatedPrice,updatedDescription, pizzaId)
-    pizza.save()
+    Pizza.findById(pizzaId)
+    .then(pizza =>{
+        pizza.title = updatedTitle;
+        pizza.price = updatedPrice;
+        pizza.description = updatedDescription;
+        pizza.imageUrl = updatedImageUrl
+        return pizza.save()
+        
+    })
     .then(result =>{
-        console.log(result);
-        console.log('updated pizza');
         res.redirect('/admin/pizzas')
         
     }).catch(e=>console.log(e))
@@ -84,7 +97,7 @@ exports.postEditPizza = (req,res,next)=>{
 exports.postDeletePizza =(req,res,next)=>{
     const pizzaId = req.body.id;
     console.log(pizzaId);
-    Pizza.deleteById(pizzaId)
+    Pizza.findByIdAndRemove(pizzaId)
     .then(()=>{
         console.log('finally deleted');
         res.redirect('/admin/pizzas')

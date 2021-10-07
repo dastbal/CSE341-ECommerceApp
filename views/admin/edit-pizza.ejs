@@ -14,8 +14,13 @@
             </label>
             <label for="price">
                 Price
-
+                
                 <input type="number"  required name="price"  step="0.01" id="price" value="<% if (editing) { %><%= pizza.price %> <% } %>">
+            </label>
+            <label for="imageUrl">
+                Image Url
+
+                <input type="url" required name="imageUrl" id="imageUrl" value="<% if (editing) { %> <%= pizza.imageUrl %><% } %>">
             </label>
             <label for="description">
                 Description
