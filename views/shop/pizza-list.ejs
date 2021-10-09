@@ -1,4 +1,6 @@
 <%- include('../includes/head.ejs') %> 
+<link rel="stylesheet" href="/css/card.css">
+
 </head>
 <body>
     <%- include('../includes/navigation.ejs')  %> 
@@ -11,17 +13,17 @@
                 <% prods.forEach( pizza => { %>
                  
                     <article class="card">
+                        <div class="card__image">
+                            <img src="<%= pizza.imageUrl %>" alt="pizza image">
+                        </div>
                         <div class="card__header">
                             <h2 class="card__title"> <%= pizza.title %> </h2>
                         </div>
-                        <div class="card__image">
-                        <img src="<%= pizza.imageUrl %>" alt="pizza image">
-                    </div>
                     <div class="card__body">
                         <h2 class="pizza-price">
                             $ <%= pizza.price %> 
                     </h2>
-                    <p class="pizza-description"><%= pizza.description %> </p>
+                        <p class="pizza-description"><%= pizza.description %> </p>
                 </div>
                 <div class="card__action">
                     <a href="/pizzas/<%= pizza._id %>" class="btn"> Details</a>

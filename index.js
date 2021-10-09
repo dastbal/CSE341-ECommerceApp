@@ -1,6 +1,7 @@
 const path  = require('path');
 
 const express = require('express');
+const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
@@ -9,12 +10,29 @@ const shopRoutes = require('./routes/shop')
 const errorController = require('./controllers/error')
 const User = require('./models/user')
 
+const cors = require('cors') // Place this with other requires (like 'path' and 'express')
+const corsOptions = {
+    origin: "https://cse341ecommerceapp.herokuapp.com/",
+    optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+
+const options = {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    //useCreateIndex: true,
+    //useFindAndModify: false,
+    family: 4
+};
+
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb+srv://david:zh4K6CWu4XnwhoC1@cluster0.xxfws.mongodb.net/shop?retryWrites=true&w=majority';
+                        
+
 
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
 }
-const app = express();
 
 //app.set('view engine', 'pug');
 app.set('view engine', 'ejs');
@@ -39,7 +57,7 @@ app.use(errorController.get404);
 
 
 mongoose
-.connect('mongodb+srv://david:zh4K6CWu4XnwhoC1@cluster0.xxfws.mongodb.net/shop?retryWrites=true&w=majority')
+.connect(MONGODB_URL, options)
 .then(result=>{
   User.findOne().then(user =>{ if(!user){
 

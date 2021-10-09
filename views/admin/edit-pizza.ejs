@@ -1,4 +1,6 @@
 <%- include('../includes/head.ejs') %> 
+<link rel="stylesheet" href="/css/form.css">
+
 </head>
 <body>
     <%- include('../includes/navigation.ejs') %> 
@@ -6,7 +8,7 @@
     
     <main>
         <h2>Add your favorite Pizza</h2>
-        <form action="/admin/<% if (editing) { %>edit-pizza<% } else{ %>add-pizza<% } %> " method="POST">
+        <form class="form-control" action="/admin/<% if (editing) { %>edit-pizza<% } else{ %>add-pizza<% } %> " method="POST">
             <label for="title">
                 Title
 
@@ -35,7 +37,7 @@
                         <input  type="hidden" name="id" value="<%=pizza._id%>">
                     <% } %>
                     
-            <button type="submit"> 
+            <button class="btn" type="submit"> 
                 <% if (editing) { %>
                     Update Pizza
                 <% } %>
