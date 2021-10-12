@@ -13,7 +13,8 @@ exports.getPizzas =(req,res,next)=>{
         res.render('shop/pizza-list',
         {prods: pizzas ,
             docTitle: 'shop' ,
-            path:"/pizzas"
+            path:"/pizzas",  
+            isLoggedIn: req.session.isLoggedIn,
         });
 
     }).catch(e=>{
@@ -30,7 +31,8 @@ exports.getIndex =(req,res,next)=>{
         res.render('shop/index',
         {prods: pizzas ,
             docTitle: 'shop' ,
-            path:"/"
+            path:"/",  
+            isLoggedIn: req.session.isLoggedIn,
         });
         
         
@@ -51,7 +53,8 @@ exports.getPizza =(req,res,next)=>{
         {
             pizza :pizza ,
             docTitle: "Pizza Detail", 
-            path : "/pizzas"
+            path : "/pizzas",  
+            isLoggedIn: req.session.isLoggedIn,
         })
         console.log(pizza)
     }).catch(e=>{
@@ -88,13 +91,14 @@ exports.getCart =(req,res,next)=>{
         res.render('shop/cart',{
             path:'/cart',
             docTitle:'Cart',
-            pizzas:pizzas,
+            pizzas:pizzas,  
+            isLoggedIn: req.session.isLoggedIn,
         })
     }).catch(e=>console.log(e))
 
 
 }
-
+// 
 exports.postCartDeletePizza =(req,res,next)=>{ 
     const pizzaId= req.body.id
     req.user
@@ -143,7 +147,8 @@ exports.getOrders =(req,res,next)=>{
         res.render('shop/orders',{
             path:'/orders',
             docTitle: 'Orders',
-            orders: orders,
+            orders: orders,  
+            isLoggedIn: req.session.isLoggedIn,
 
         })
 

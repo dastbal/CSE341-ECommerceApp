@@ -10,7 +10,8 @@ https://github.com/dastbal/CSE341-ECommerceApp
 
 3. Briefly list and describe the elements of the application that are functioning. 
 
-All that is explained in the video it is working,  I am use  a theme of pizza
+All that is explained in the video it is working, the connection with mongo, rhe orders and cart
+
 
 4. Briefly describe any pieces of the assignment that are not yet working correctly.
 
@@ -18,18 +19,17 @@ all is working
 
 5. Briefly describe the "coolest" thing you learned while completing this assignment.
 
-I learned how to use better teh debbuger in node beacuse I had a lot of issues and how to use heroku because  i cannot to deploy it , but  finally I got it
-
+that exist package in npm awesome that help us  teh development such mongoose, was so useful  because we  need to  write less code
 6. If you could change this assignment to be more effective or helpful, what would you change?
 
 nothing
 
 7. Please select the category you feel best describes your assignment:
 
-   5 - Shows creativity and excels above and beyond requirements
+    Shows creativity and excels above and beyond requirements
 
 8. Provide a brief justification (1-2 sentences) for selecting that category.
 
-I follow the videos using other theme  and try to write the code in my way.
+I follow the videos using other theme  and read and wacthed other videos about mmongodb to undestand better the use with  nodeJs
 
 

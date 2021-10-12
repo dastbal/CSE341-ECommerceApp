@@ -8,6 +8,7 @@ exports.getAddPizza = (req,res,next)=>{
         docTitle: "Add Pizza" ,
         path : "/admin/add-pizza",
         editing: false ,  
+        isLoggedIn: req.session.isLoggedIn,
     });
 }
 
@@ -21,7 +22,7 @@ exports.postAddPizza =(req,res,next)=>{
         price:price,
         description : description,
         imageUrl:imageUrl,
-        userId:req.user
+        userId: req.user
     });
     console.log('Pizza added')
     pizza
@@ -43,7 +44,8 @@ exports.getPizzas =(req,res,next)=>{
         {
             prods: pizzas ,
             docTitle: 'Admin Pizzas' ,
-            path:"/admin/pizzas"
+            path:"/admin/pizzas",  
+            isLoggedIn: req.session.isLoggedIn,
         });
 
     }).catch(e=> console.log(e))
@@ -65,7 +67,8 @@ exports.getEditPizza = (req,res,next)=>{
             docTitle: "Edit  Pizza" ,
             path : "/admin/adit-pizza",
             editing: editMode,
-            pizza: pizza,
+            pizza: pizza,  
+            isLoggedIn: req.session.isLoggedIn,
         });
     }).catch(e=>console.log(e))
 }

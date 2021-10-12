@@ -1,4 +1,8 @@
-<form action="/cart" method="POST">
-    <input type="hidden" name="id"  value="<%= pizza._id %>">
-    <button class="btn"> Add </button>
-</form>
+<% if (isLoggedIn) { %>
+ 
+    
+    <form action="/cart" method="POST">
+        <input type="hidden" name="id"  value="<%= pizza._id %>">
+        <button class="btn"> Add </button>
+    </form>
+    <% } %>
