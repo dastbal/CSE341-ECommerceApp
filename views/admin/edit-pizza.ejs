@@ -35,8 +35,9 @@
 
                     <% if (editing) { %>
                         <input  type="hidden" name="id" value="<%=pizza._id%>">
+                        
                     <% } %>
-                    
+            <input type="hidden" value="<%= csrfToken %>" name="_csrf">    
             <button class="btn" type="submit"> 
                 <% if (editing) { %>
                     Update Pizza

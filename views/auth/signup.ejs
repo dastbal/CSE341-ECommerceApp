@@ -8,11 +8,7 @@
     
     <main>
         <h2>Login</h2>
-        <% if (errorMessage) { %>
-            <p class="alertMessage"> <%= errorMessage %> </p>
-         
-        <% } %>
-        <form class="form-control" action="/login" method="POST">
+        <form class="form-control" action="/signup" method="POST">
             <label for="email">
                 E-mail
 
@@ -22,10 +18,16 @@
                 Password
                 
                 <input type="password"  required name="password"  step="0.01" id="password" >
-            </label>  
-
-            <input type="hidden" value="<%= csrfToken %>" name="_csrf">        
-            <button class="btn" type="submit"> Login </button>
+            </label>                    
+            <label for="confirmPassword">
+                Confirm Password
+                
+                <input type="password"  required name="confirmPassword"  step="0.01" id="confirmPassword" >
+            </label> 
+            <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+                   
+                    
+            <button class="btn" type="submit"> Signup </button>
                 
                 
         </form>

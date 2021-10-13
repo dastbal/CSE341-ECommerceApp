@@ -1,10 +1,12 @@
 const path  = require('path');
+const flash =  require('connect-flash')
 
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const csrf= require('csurf');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 const adminRoutes = require('./routes/admin')
@@ -12,6 +14,7 @@ const shopRoutes = require('./routes/shop')
 const authRoutes = require('./routes/auth')
 const errorController = require('./controllers/error')
 const User = require('./models/user')
+const cors = require('cors') // Place this with other requires (like 'path' and 'express')
 
 const MONGODB_URL = process.env.MONGODB_URL || 'mongodb+srv://david:zh4K6CWu4XnwhoC1@cluster0.xxfws.mongodb.net/shop?retryWrites=true&w=majority';
 const MONGODB_URI = process.env.MONGODB_URL || 'mongodb+srv://david:zh4K6CWu4XnwhoC1@cluster0.xxfws.mongodb.net/shop';
@@ -22,8 +25,9 @@ const store = new MongoDBStore({
 
 })
 
+const csrfProtection  = csrf()
 
-const cors = require('cors') // Place this with other requires (like 'path' and 'express')
+
 const corsOptions = {
     origin: "https://cse341ecommerceapp.herokuapp.com/",
     optionsSuccessStatus: 200
@@ -62,6 +66,8 @@ app.use(
 }
 ));
 
+app.use(csrfProtection) 
+app.use(flash()) 
 
 app.use((req,res,next)=>{
   if(!req.session.user){
@@ -73,6 +79,12 @@ app.use((req,res,next)=>{
     next()
   })
   .catch(e=> console.log(e))
+})
+
+app.use( (req,res,next)=>{
+  res.locals.isLoggedIn = req.session.isLoggedIn;
+  res.locals.csrfToken =  req.csrfToken()
+  next()
 })
 
 
@@ -87,18 +99,6 @@ app.use(errorController.get404);
 mongoose
 .connect(MONGODB_URL, options)
 .then(result=>{
-  User.findOne().then(user =>{ if(!user){
-
-    const user = new User({
-      name: 'david',
-      email: 'davidxsteven@gmail.com',
-      cart:{
-        items:[ ]
-      }
-    })
-    user.save()
-    
-  }})
   app.listen(port)
 })
 .catch(e=> console.log(e))

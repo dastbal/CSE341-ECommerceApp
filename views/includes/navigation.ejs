@@ -31,11 +31,15 @@
                 <li>
                     <a href="/login"  class="<%= path== '/login' ? 'active': '' %>"> Login</a>
                 </li>
+                <li>
+                    <a href="/signup"  class="<%= path== '/signup' ? 'active': '' %>"> Signup</a>
+                </li>
              
             <% } else{%>
             <li>
                 <form action="/logout" method="post">
-                <button  type="submit" class="btn">  logout</button>
+                    <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+                <button  type="submit" class="btn">  Logout</button>
             </form>
             </li>
             <% } %>

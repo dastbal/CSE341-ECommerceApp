@@ -33,6 +33,7 @@ exports.getIndex =(req,res,next)=>{
             docTitle: 'shop' ,
             path:"/",  
             isLoggedIn: req.session.isLoggedIn,
+            
         });
         
         
@@ -124,7 +125,7 @@ exports.postOrder =(req,res,next)=>{
         });
         const order = new Order({
             user:{
-                name: req.user.name,
+                email: req.user.email,
                 userId : req.user
             },
             pizzas:pizzas

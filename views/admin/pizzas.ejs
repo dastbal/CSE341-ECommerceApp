@@ -31,6 +31,8 @@
 
                     <form action="/admin/delete-pizza" method="POST">
                         <input type="hidden" name="id"  value="<%= pizza._id%>">
+                        <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+
                         <button type="submit" class="btn">Delete</button>
                     </form>
                 </div>

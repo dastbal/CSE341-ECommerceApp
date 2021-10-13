@@ -4,6 +4,7 @@ const express = require('express');
 
 
 const adminController = require('../controllers/admin');
+const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 //const rootDir = require('../utils/path')
@@ -11,11 +12,11 @@ const router = express.Router();
 
 
 
-router.get('/add-pizza',adminController.getAddPizza)
-router.post('/add-pizza',adminController.postAddPizza)
-router.get('/pizzas',adminController.getPizzas)
-router.get('/edit-pizza/:id',adminController.getEditPizza)
-router.post('/edit-pizza', adminController.postEditPizza)
-router.post('/delete-pizza', adminController.postDeletePizza)
+router.get('/add-pizza', isAuth,adminController.getAddPizza)
+router.post('/add-pizza' , isAuth ,adminController.postAddPizza)
+router.get('/pizzas' , isAuth ,adminController.getPizzas)
+router.get('/edit-pizza/:id' , isAuth ,adminController.getEditPizza)
+router.post('/edit-pizza' , isAuth , adminController.postEditPizza)
+router.post('/delete-pizza' , isAuth , adminController.postDeletePizza)
 
 exports.routes= router;;
