@@ -8,6 +8,8 @@ https://cse341ecommerceapp.herokuapp.com/
 
 https://github.com/dastbal/CSE341-ECommerceApp
 
+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
+
 3. Briefly list and describe the elements of the application that are functioning. 
 
 All that is explained in the video it is working, the connection with mongo, rhe orders and cart
