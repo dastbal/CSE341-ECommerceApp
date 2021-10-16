@@ -9,10 +9,20 @@
     <main>
         <h2>SignUp</h2>
         <form class="form-control" action="/signup" method="POST">
+            <label for="name">
+                Name
+
+                <input type="name" required name="name" id="name" placeholder="David" >
+            </label>
+            <label for="phone">
+                Phone
+
+                <input type="phone"  name="phone" id="phone"  placeholder="0978959094">
+            </label>
             <label for="email">
                 E-mail
 
-                <input type="email" required name="email" id="email" >
+                <input type="email" required name="email" id="email"  placeholder="pizza@pizza.com"  >
             </label>
             <label for="password">
                 Password

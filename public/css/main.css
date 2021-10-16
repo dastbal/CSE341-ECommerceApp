@@ -20,6 +20,13 @@ nav{
     flex-direction: row;
     justify-content: space-between;
 }
+.userName{
+    color: white;
+    font-style: italic;
+    font-size: 1.2rem;
+    margin: 0 ;
+    padding: 0;
+}
 ul{
     display: flex;
 }

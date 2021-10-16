@@ -8,7 +8,6 @@ https://cse341ecommerceapp.herokuapp.com/
 
 https://github.com/dastbal/CSE341-ECommerceApp
 
-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
 
 3. Briefly list and describe the elements of the application that are functioning. 
 
@@ -21,7 +20,7 @@ all is working
 
 5. Briefly describe the "coolest" thing you learned while completing this assignment.
 
-that exist package in npm awesome that help us  teh development such mongoose, was so useful  because we  need to  write less code
+to know new package in npm awesomes that help us in the development 
 6. If you could change this assignment to be more effective or helpful, what would you change?
 
 nothing
@@ -32,6 +31,8 @@ nothing
 
 8. Provide a brief justification (1-2 sentences) for selecting that category.
 
-I follow the videos using other theme  and read and wacthed other videos about mmongodb to undestand better the use with  nodeJs
+I follow the videos using other theme 
+added two field to save the name and phone of the new user
+added the name of the user to the navigation wurh it is logged
 
 

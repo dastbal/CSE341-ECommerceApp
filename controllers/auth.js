@@ -32,6 +32,7 @@ exports.postLogin = async (req,res,next)=>{
     const doMatch = await bcrypt.compare(password, user.password);
     if (doMatch){
         req.session.isLoggedIn = true ;  
+        req.session.userName =  user.name ;  
         req.session.user = user;
         await req.session.save()
         return res.redirect('/')
@@ -84,7 +85,7 @@ exports.postSignup = async (req,res,next)=>{
     // .catch( e => console.log(e))
     try{
 
-    const { confirmPassword , password , email} = req.body    
+    const { name, phone ,confirmPassword , password , email} = req.body    
     const userDoc  =  await User.findOne({email:email})
     console.log('usedoc',userDoc)
     if(userDoc){
@@ -92,6 +93,8 @@ exports.postSignup = async (req,res,next)=>{
         }
     const hashedPassword =  await bcrypt.hash(password, 12)
     const user = new User({
+            name:name ,
+            phone:phone ,
             email:email ,
             password: hashedPassword ,
             cart : { items:[]}
