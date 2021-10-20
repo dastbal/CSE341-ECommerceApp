@@ -12,23 +12,16 @@
             <p class="alertMessage"> <%= errorMessage %> </p>
          
         <% } %>
-        <form class="form-control" action="/login" method="POST">
+        <form class="form-control" action="/reset" method="POST">
             <label for="email">
                 E-mail
 
                 <input type="email" required name="email" id="email" >
             </label>
-            <label for="password">
-                Password
-                
-                <input type="password"  required name="password"  step="0.01" id="password" >
-            </label>  
+           
 
             <input type="hidden" value="<%= csrfToken %>" name="_csrf">        
-            <button class="btn" type="submit"> Login </button>
-            <div class="centered">
-                <a href="/reset"> Reset Password</a>
-            </div>
+            <button class="btn" type="submit"> Reset</button>
                 
                 
         </form>

@@ -1,11 +1,12 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const  sendgridTranport = require('nodemailer-sendgrid-transport');
 
 const transporter = nodemailer.createTransport(sendgridTranport({
     auth:{
-        api_key:'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',
+        api_key:'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',
     }
 }));
 
@@ -28,7 +29,7 @@ exports.postLogin = async (req,res,next)=>{
         req.flash('error' , 'invalid Email.')
         return res.redirect('/login')
     }
-        
+    
     const doMatch = await bcrypt.compare(password, user.password);
     if (doMatch){
         req.session.isLoggedIn = true ;  
@@ -36,8 +37,12 @@ exports.postLogin = async (req,res,next)=>{
         req.session.user = user;
         await req.session.save()
         return res.redirect('/')
-            
-
+        
+        
+    }
+    if(!doMatch){
+        req.flash('error' , 'invalid Password.')
+        return res.redirect('/login')
     }
     res.redirect('/login')
 
@@ -105,7 +110,7 @@ exports.postSignup = async (req,res,next)=>{
             
         await transporter.sendMail({
                 to: email,
-         from: 'pizza@davidpizza.com',
+         from: 'davidxsteven@gmail.com',
          subject:'Signup Suceeded',
          html: '<h1> You successfully signed up</h1>',
         })
@@ -123,5 +128,94 @@ exports.getSignup = (req,res,next)=>{
         path : "/signup",  
         isLoggedIn: req.session.isLoggedIn,
     });
+    
+}
+exports.getReset = (req,res,next)=>{
+    res.render("auth/reset",{
+        docTitle: "Reset" ,
+        path : "/signup",  
+        errorMessage : req.flash('error'),
+    });
+    
+}
+exports.postReset = async (req,res,next)=>{
+    try{
+    crypto.randomBytes(32, async (e,buffer)=>{
+        if(e){
+            console.log(e);
+            return res.redirect('/reset')
+            
+        }
+        const token = buffer.toString('hex')
+          
+        
+        const user =  await User.findOne({email: req.body.email});
+        if(!user){
+            req.flash('error','No account with that email found.');
+            return res.redirect('/reset')
+        }
+        user.resetToken = token
+        user.resetTokenExpiration =  Date.now() + 900000
+        await user.save()
+        res.redirect('/')
+
+
+
+
+        await transporter.sendMail({
+            to: req.body.email,
+            from: 'davidxsteven@gmail.com',
+            subject:'Password Reset',
+            html: `
+            <h1> You requested a password</h1>
+            <p> Click this <a  href="http://localhost:3000/reset/${token}" >link</a> to set a new password</p>
+            `,
+            
+        })
+ 
+        
+
+
+    })
+        
+    }catch(e){
+        console.log(e)
+        
+    }
+    
+    
+}
+
+exports.getNewPassword = async (req,res,next)=>{
+    const {token} = req.params
+    res.render("auth/new-password",{
+        docTitle: "New Password" ,
+        path : "/new-password",  
+        errorMessage : req.flash('error'),
+        token : token ,
+    });
+}
+exports.postNewPassword = async (req,res,next)=>{
+    const {token ,email , password} = req.body
+    const user = await User.findOne({resetToken : token})
+    if(!user){
+        req.flash('error' , 'invalid Information.')
+        return res.redirect('/login')
+    }
+    
+
+    const hashedPassword =  await bcrypt.hash(password, 12)
+    user.password = hashedPassword
+    await user.save()
+    res.redirect('/login')
+    await transporter.sendMail({
+        to: email,
+        from: 'davidxsteven@gmail.com',
+        subject:'Password Changed',
+        html: `
+        <h1> You Changed  the Password</h1>   `,
+        
+    })
+
     
 }
