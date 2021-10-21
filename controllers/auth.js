@@ -1,8 +1,11 @@
 const User = require('../models/user');
+const {validationResult} = require('express-validator');
+
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const  sendgridTranport = require('nodemailer-sendgrid-transport');
+const { exists } = require('../models/user');
 
 const transporter = nodemailer.createTransport(sendgridTranport({
     auth:{
@@ -10,18 +13,33 @@ const transporter = nodemailer.createTransport(sendgridTranport({
     }
 }));
 
-exports.getLogin = (req,res,next)=>{
-    console.log(req.session.isLoggedIn)
-    res.render("auth/login",{
+exports.getLogin = (req,res,next)=>{    res.render("auth/login",{
         docTitle: "Login" ,
         path : "/login",  
         isLoggedIn: req.session.isLoggedIn,
-        errorMessage : req.flash('error')
+        errorMessage : req.flash('error'),
+        oldInput: {
+            email: ""
+
+        }
     });
     
 }
 exports.postLogin = async (req,res,next)=>{
     const { password , email} = req.body 
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(422).render("auth/login",{
+            docTitle: "Login" ,
+            path : "/login",  
+            errorMessage: errors.array()[0].msg,
+            oldInput: {
+                email:email
+
+            }
+        })
+    }
     
     try{
     const user =  await User.findOne({email:email})
@@ -91,9 +109,26 @@ exports.postSignup = async (req,res,next)=>{
     try{
 
     const { name, phone ,confirmPassword , password , email} = req.body    
+    const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(422).render("auth/signup",{
+                docTitle: "Signup" ,
+                path : "/signup",  
+                errorMessage: errors.array()[0].msg,
+                oldInput: {
+                    email:email,
+                    name:name,
+                    phone:phone,
+                    password:password,
+                    confirmPassword:confirmPassword,
+    
+                }
+            })
+        }
     const userDoc  =  await User.findOne({email:email})
     console.log('usedoc',userDoc)
     if(userDoc){
+        req.flash('error', 'E-mail exists already, please pick a different one')
             return res.redirect('/signup')
         }
     const hashedPassword =  await bcrypt.hash(password, 12)
@@ -126,7 +161,16 @@ exports.getSignup = (req,res,next)=>{
     res.render("auth/signup",{
         docTitle: "Signup" ,
         path : "/signup",  
-        isLoggedIn: req.session.isLoggedIn,
+        errorMessage : req.flash('error'),
+        oldInput: {
+            email:'',
+            name:'',
+            phone:'',
+            password:'',
+            confirmPassword:'',
+
+        }
+
     });
     
 }
@@ -188,16 +232,25 @@ exports.postReset = async (req,res,next)=>{
 
 exports.getNewPassword = async (req,res,next)=>{
     const {token} = req.params
-    res.render("auth/new-password",{
-        docTitle: "New Password" ,
-        path : "/new-password",  
-        errorMessage : req.flash('error'),
-        token : token ,
-    });
+    try{
+
+        const user  = await User.findOne({resetToken:token , resetTokenExpiration:{$gt: Date.now()}})
+        res.render("auth/new-password",{
+            docTitle: "New Password" ,
+            path : "/new-password",  
+            errorMessage : req.flash('error'),
+            userId: user._id ,
+            token : token ,
+        });
+    }catch(e){
+        res.redirect('/')
+        console.log(e)
+
+    }
 }
 exports.postNewPassword = async (req,res,next)=>{
-    const {token ,email , password} = req.body
-    const user = await User.findOne({resetToken : token})
+    const { token, id , password} = req.body
+    const user = await User.findOne({resetToken : token  , resetTokenExpiration:{$gt: Date.now()} , _id: id})
     if(!user){
         req.flash('error' , 'invalid Information.')
         return res.redirect('/login')
@@ -206,6 +259,8 @@ exports.postNewPassword = async (req,res,next)=>{
 
     const hashedPassword =  await bcrypt.hash(password, 12)
     user.password = hashedPassword
+    user.resetToken = undefined
+    user.resetTokenExpiration = undefined
     await user.save()
     res.redirect('/login')
     await transporter.sendMail({

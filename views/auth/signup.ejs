@@ -8,31 +8,35 @@
     
     <main>
         <h2>SignUp</h2>
-        <form class="form-control" action="/signup" method="POST">
+        <% if (errorMessage) { %>
+            <p class="alertMessage"> <%= errorMessage %> </p>
+         
+        <% } %>
+        <form  class="form-control" action="/signup" method="POST">
             <label for="name">
                 Name
 
-                <input type="name" required name="name" id="name" placeholder="David" >
+                <input type="name" required name="name" id="name" placeholder="David"  value="<% if (oldInput) { %><%= oldInput.name %><% } %>">
             </label>
             <label for="phone">
                 Phone
 
-                <input type="phone"  name="phone" id="phone"  placeholder="0978959094">
+                <input type="phone"  name="phone" id="phone"  placeholder="0978959094" value="<% if (oldInput) { %><%= oldInput.phone %><% } %>">
             </label>
             <label for="email">
                 E-mail
 
-                <input type="email" required name="email" id="email"  placeholder="pizza@pizza.com"  >
+                <input type="email" required name="email" id="email"  placeholder="pizza@pizza.com"  value="<% if (oldInput) { %><%= oldInput.email %><% } %>" >
             </label>
             <label for="password">
                 Password
                 
-                <input type="password"  required name="password"  step="0.01" id="password" >
+                <input type="password"  required name="password"  step="0.01" id="password"  value="<% if (oldInput) { %><%= oldInput.password %><% } %>">
             </label>                    
             <label for="confirmPassword">
                 Confirm Password
                 
-                <input type="password"  required name="confirmPassword"  step="0.01" id="confirmPassword" >
+                <input type="password" value="<% if (oldInput) { %><%= oldInput.confirmPassword %><% } %>" required name="confirmPassword"  step="0.01" id="confirmPassword" >
             </label> 
             <input type="hidden" value="<%= csrfToken %>" name="_csrf">
                    

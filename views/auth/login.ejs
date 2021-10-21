@@ -16,7 +16,7 @@
             <label for="email">
                 E-mail
 
-                <input type="email" required name="email" id="email" >
+                <input type="email" required name="email" id="email"  value="<% if (oldInput.email) { %><%= oldInput.email %><% } %>">
             </label>
             <label for="password">
                 Password

@@ -1,4 +1,5 @@
 const Pizza = require('../models/pizza');
+const {validationResult} = require('express-validator');
 
 
 exports.getAddPizza = (req,res,next)=>{
@@ -7,6 +8,12 @@ exports.getAddPizza = (req,res,next)=>{
     res.render("admin/edit-pizza",{
         docTitle: "Add Pizza" ,
         path : "/admin/add-pizza",
+        errorMessage: null,
+        oldInput:{ title: '',
+            price:'',
+            description : '',
+            imageUrl: '',
+        },
         editing: false ,  
         isLoggedIn: req.session.isLoggedIn,
     });
@@ -17,6 +24,22 @@ exports.postAddPizza =(req,res,next)=>{
     const price = parseInt(req.body.price);
     const description = req.body.description;
     const imageUrl = req.body.imageUrl;
+
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return  res.render("admin/edit-pizza",{
+            docTitle: "Add Pizza" ,
+            path : "/admin/add-pizza",
+            errorMessage: errors.array()[0].msg,
+            oldInput:{ title:title,
+                price:price,
+                description : description,
+                imageUrl:imageUrl,
+            },
+            editing: false ,  
+        });
+        }
     const pizza = new Pizza({
         title:title,
         price:price,
@@ -38,7 +61,7 @@ exports.postAddPizza =(req,res,next)=>{
 
 
 exports.getPizzas =(req,res,next)=>{
-    Pizza.find()
+    Pizza.find({userId: req.user._id})
     .then(pizzas=>{
         res.render('admin/pizzas',
         {
@@ -67,7 +90,14 @@ exports.getEditPizza = (req,res,next)=>{
             docTitle: "Edit  Pizza" ,
             path : "/admin/adit-pizza",
             editing: editMode,
-            pizza: pizza,  
+            pizza: pizza,
+            errorMessage: null,
+            oldInput:{ title: '',
+                price:'',
+                description : '',
+                imageUrl: '',
+            },
+
             isLoggedIn: req.session.isLoggedIn,
         });
     }).catch(e=>console.log(e))
@@ -78,21 +108,39 @@ exports.postEditPizza = (req,res,next)=>{
     let updatedPrice = parseInt(req.body.price);
     const updatedDescription = req.body.description;
     const updatedImageUrl = req.body.imageUrl;
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return  res.render("admin/edit-pizza",{
+            docTitle: "Add Pizza" ,
+            path : "/admin/edit-pizza",
+            errorMessage: errors.array()[0].msg,
+            oldInput:{ title:updatedTitle,
+                price:updatedPrice,
+                description : updatedDescription,
+                imageUrl:updatedImageUrl,
+            },
+            editing: false ,  
+        });
+        }
     
     
     Pizza.findById(pizzaId)
     .then(pizza =>{
+        if (pizza.userId.toString() !== req.user._id.toString()){
+            return res.redirect('/');
+        }
         pizza.title = updatedTitle;
         pizza.price = updatedPrice;
         pizza.description = updatedDescription;
         pizza.imageUrl = updatedImageUrl
-        return pizza.save()
+        return pizza.save().then(result =>{
+            res.redirect('/admin/pizzas')
+            
+        })
         
     })
-    .then(result =>{
-        res.redirect('/admin/pizzas')
-        
-    }).catch(e=>console.log(e))
+    .catch(e=>console.log(e))
     
     
 }
@@ -100,12 +148,17 @@ exports.postEditPizza = (req,res,next)=>{
 exports.postDeletePizza =(req,res,next)=>{
     const pizzaId = req.body.id;
     console.log(pizzaId);
-    Pizza.findByIdAndRemove(pizzaId)
+    Pizza.deleteOne({_id: pizzaId, userId: req.user._id})
     .then(()=>{
         console.log('finally deleted');
         res.redirect('/admin/pizzas')
     })
-    .catch(e=>console.log(e))
+    .catch((e)=>
+        {
+            console.log(e)
+            res.redirect('/admin/pizzas')
+    }
+        )
 
     
 
