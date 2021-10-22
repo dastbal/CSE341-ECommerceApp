@@ -150,12 +150,14 @@ exports.postSignup = async (req,res,next)=>{
          html: '<h1> You successfully signed up</h1>',
         })
     }catch( e ){
-        console.log(e)
+        throw new Error(e)
     }
     
     }catch(e){
-        console.log(e)
-    }
+        const error = new Error(e);
+        error.httpStatus = '500'
+        next(error)
+}
 }
 exports.getSignup = (req,res,next)=>{
     res.render("auth/signup",{
@@ -223,9 +225,10 @@ exports.postReset = async (req,res,next)=>{
     })
         
     }catch(e){
-        console.log(e)
-        
-    }
+        const error = new Error(e);
+        error.httpStatus = '500'
+        next(error)
+}
     
     
 }
@@ -244,14 +247,15 @@ exports.getNewPassword = async (req,res,next)=>{
         });
     }catch(e){
         res.redirect('/')
-        console.log(e)
 
     }
 }
 exports.postNewPassword = async (req,res,next)=>{
     const { token, id , password} = req.body
-    const user = await User.findOne({resetToken : token  , resetTokenExpiration:{$gt: Date.now()} , _id: id})
-    if(!user){
+    try{
+
+        const user = await User.findOne({resetToken : token  , resetTokenExpiration:{$gt: Date.now()} , _id: id})
+        if(!user){
         req.flash('error' , 'invalid Information.')
         return res.redirect('/login')
     }
@@ -273,4 +277,9 @@ exports.postNewPassword = async (req,res,next)=>{
     })
 
     
+}catch(e){
+    const error = new Error(e);
+    error.httpStatus = '500'
+    next(error)
+}
 }

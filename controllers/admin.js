@@ -54,7 +54,11 @@ exports.postAddPizza =(req,res,next)=>{
         res.redirect('/admin/pizzas');
         
     }).catch(e=>{
-        console.log(e)
+        {
+            const error = new Error(e);
+            error.httpStatus = '500'
+            next(error)
+    }
 
     })
 }
@@ -71,7 +75,7 @@ exports.getPizzas =(req,res,next)=>{
             isLoggedIn: req.session.isLoggedIn,
         });
 
-    }).catch(e=> console.log(e))
+    }).catch(e=> res.redirect('/500'))
 
 }
 exports.getEditPizza = (req,res,next)=>{
@@ -100,7 +104,11 @@ exports.getEditPizza = (req,res,next)=>{
 
             isLoggedIn: req.session.isLoggedIn,
         });
-    }).catch(e=>console.log(e))
+    }).catch(e=>{
+            const error = new Error(e);
+            error.httpStatus = '500'
+            next(error)
+    })
 }
 exports.postEditPizza = (req,res,next)=>{
     const pizzaId = req.body.id;
@@ -140,7 +148,11 @@ exports.postEditPizza = (req,res,next)=>{
         })
         
     })
-    .catch(e=>console.log(e))
+    .catch(e=>{
+            const error = new Error(e);
+            error.httpStatus = '500'
+            next(error)
+    })
     
     
 }
@@ -155,8 +167,9 @@ exports.postDeletePizza =(req,res,next)=>{
     })
     .catch((e)=>
         {
-            console.log(e)
-            res.redirect('/admin/pizzas')
+            const error = new Error(e);
+            error.httpStatus = '500'
+            next(error)
     }
         )
 
