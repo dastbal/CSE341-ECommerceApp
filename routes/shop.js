@@ -12,6 +12,8 @@ router.get('/pizzas',shopController.getPizzas);
 
 router.get('/pizzas/:pizzaId',shopController.getPizza)
 
+router.post('/comment',shopController.postComment)
+
 router.get('/cart' , isAuth ,shopController.getCart)
 router.post('/cart' , isAuth ,shopController.postCart)
 router.post('/cart-delete-pizza' , isAuth ,shopController.postCartDeletePizza)

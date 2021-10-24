@@ -1,5 +1,6 @@
 const Pizza = require('../models/pizza')
 const Order = require('../models/order')
+const Comment = require('../models/comment')
 
 
 
@@ -44,24 +45,51 @@ exports.getIndex =(req,res,next)=>{
 }
 
 
-exports.getPizza =(req,res,next)=>{
+exports.getPizza = async (req,res,next)=>{
+    try{
 
-    const pizzaId= req.params.pizzaId
-    console.log(pizzaId);
-    Pizza.findById(pizzaId)
-    .then((pizza)=>{
-        res.render('shop/pizza-detail',
-        {
+        
+    const {pizzaId}= req.params
+    const pizza =  await Pizza.findById(pizzaId);
+    const comments = await Comment.find({pizzaId: pizzaId})
+    
+    
+    
+    res.render('shop/pizza-detail',
+    {
             pizza :pizza ,
             docTitle: "Pizza Detail", 
-            path : "/pizzas",  
-            isLoggedIn: req.session.isLoggedIn,
+            path : "/pizzas",
+            comments: comments,
         })
-        console.log(pizza)
-    }).catch(e=>{
+        
+    }catch(e){
         console.log(e)
-    })
+    }
+
+
 }
+exports.postComment = async (req,res,next)=>{
+    try{
+
+        const  { comment , id} = req.body
+        const user = req.session.user
+        const pizza =  await Pizza.findById(id)
+    const newComment = await new Comment({
+        comment: comment,
+        pizzaId: pizza,
+        userId: user
+    })
+    await newComment.save()
+    
+    res.redirect('/')
+}catch(e){
+    res.redirect('/')
+}
+
+    
+}
+
     
 
 exports.postCart =(req,res,next)=>{

@@ -74,6 +74,7 @@ exports.postLogin = async (req,res,next)=>{
 }
 exports.postLogout = (req,res,next)=>{
     req.session.destroy((e)=>{
+        console.log('jshshjah')
         console.log(e)
         res.redirect('/');
 

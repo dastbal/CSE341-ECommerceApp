@@ -1,0 +1,23 @@
+.flex-detail{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    
+    
+}
+img{
+    width: 100%;
+}
+div{
+    text-align: center;
+}
+.left-detail , right-detail{
+    width: 40%;
+}
+textarea{
+    display: block;
+}
+form{
+    margin-top: 2rem;
+}

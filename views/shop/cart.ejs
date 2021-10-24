@@ -1,9 +1,13 @@
 <%- include('../includes/head.ejs') %> 
+<link rel="stylesheet" href="/css/order.css">
+
 </head>
 <body>
     <%- include('../includes/navigation.ejs')  %> 
-    <main>
-        <% if (pizzas.length > 0) { %>
+    <main class="order-now">
+        <div class="orders">
+            <% if (pizzas.length > 0) { %>
+                <div class="order">
             <ul>
                 <% pizzas.forEach(pizza => { %>
                     <li>
@@ -14,17 +18,20 @@
                         <input type="hidden" name="id" value="<%= pizza.pizzaId._id%>" >
                         <input type="hidden" value="<%= csrfToken %>" name="_csrf">
 
-                        <button class="btn" type="submit"> Delete</button>
+                        <button class="btn delete-btn" type="submit"> Delete</button>
                         </form>
                       </li> 
-                 
+
+                 </div>
                 <% }) %>
             </ul>
+
+            </div>
             <hr>
-            <form action="/create-order" method="post">
+            <form  action="/create-order" method="post">
                 <input type="hidden" value="<%= csrfToken %>" name="_csrf">
 
-                <button class="btn" type="submit"> Order Now!</button>
+                <button class="btn " id="order-btn" type="submit"> Order Now!</button>
                 </form>
 
          
