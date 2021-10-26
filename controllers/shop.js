@@ -53,20 +53,47 @@ exports.getPizza = async (req,res,next)=>{
     const pizza =  await Pizza.findById(pizzaId);
     const comments = await Comment.find({pizzaId: pizzaId})
     
-    
-    
-    res.render('shop/pizza-detail',
-    {
+
+    if(req.session.user){
+
+        
+        res.render('shop/pizza-detail',
+        {
             pizza :pizza ,
             docTitle: "Pizza Detail", 
             path : "/pizzas",
             comments: comments,
+            userLoggedId : req.session.user._id.toString()
         })
+    }else{
+        res.render('shop/pizza-detail',
+        {
+            pizza :pizza ,
+            docTitle: "Pizza Detail", 
+            path : "/pizzas",
+            comments: comments,
+            userLoggedId : null
+        })
+    }
         
     }catch(e){
         console.log(e)
     }
 
+
+}
+exports.postCommentDelete = async (req,res,next)=>{
+    try{
+        const { pizzaId, id} = req.body
+        await Comment.deleteOne({_id:id})
+
+        res.redirect(`/pizzas/${pizzaId}`)
+
+    }catch(e){
+    const error = new Error(e);
+    error.httpStatus = '500'
+    next(error)
+}
 
 }
 exports.postComment = async (req,res,next)=>{

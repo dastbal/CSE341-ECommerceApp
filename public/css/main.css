@@ -67,6 +67,9 @@ button{
     box-shadow: 0.5px 0.5px 10px black;
 
 }
+.logout{
+    margin: 0;
+}
 
 
 .btn{width: 100px;
