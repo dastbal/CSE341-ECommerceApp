@@ -27,9 +27,13 @@
     <div class="right-detail">
         <div class="comments">
             <h2>Comments</h2>
+            <% if (comments.length == 0 ) { %>
+                <h4> Be the First in leave a comment!!</h4>
+             
+            <% } %>
             <% comments.forEach(c => { %>
                 <div class="comment">
-                    <h3> name</h3>
+                    <h3>  <%= c.user.name  %>  </h3>
                     <p> <%= c.comment %>  </p>
                 </div>
              

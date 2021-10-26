@@ -12,9 +12,16 @@ const commentSchema = new Schema({
         ref:'Pizza',
         required : true,
     },
-    userId:{
-        type: Schema.Types.ObjectId,
-        ref:'User'
+    user:{
+        name:{
+            type: String,
+            ref:'User'
+        },
+
+        userId:{
+            type: Schema.Types.ObjectId,
+            ref:'User'
+        }
     }
     
 });

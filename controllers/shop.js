@@ -71,20 +71,28 @@ exports.getPizza = async (req,res,next)=>{
 }
 exports.postComment = async (req,res,next)=>{
     try{
-
+        console.log(' saving a comment')
+        
         const  { comment , id} = req.body
-        const user = req.session.user
+        const userComment = req.session.user
         const pizza =  await Pizza.findById(id)
-    const newComment = await new Comment({
+        const newComment = await new Comment({
         comment: comment,
         pizzaId: pizza,
-        userId: user
+        user : {
+            name: userComment.name ,
+             userId: userComment._id
+            }
     })
-    await newComment.save()
+    await newComment.save()    
     
-    res.redirect('/')
+    
+    res.redirect(`/pizzas/${id}`)
+    
 }catch(e){
-    res.redirect('/')
+    const error = new Error(e);
+    error.httpStatus = '500'
+    next(error)
 }
 
     
@@ -104,7 +112,11 @@ Pizza.findById(pizzaId)
     res.redirect('/cart')
     
 })
-.catch(e=>console.log(e))
+.catch(e=>{
+    const error = new Error(e);
+    error.httpStatus = '500'
+    next(error)
+})
 
 
 }
@@ -123,7 +135,11 @@ exports.getCart =(req,res,next)=>{
             pizzas:pizzas,  
             isLoggedIn: req.session.isLoggedIn,
         })
-    }).catch(e=>console.log(e))
+    }).catch(e=>{
+        const error = new Error(e);
+        error.httpStatus = '500'
+        next(error)
+    })
 
 
 }
@@ -135,7 +151,11 @@ exports.postCartDeletePizza =(req,res,next)=>{
     .then(result=>{
         res.redirect('/cart')
         
-    }).catch(e=>console.log(e))
+    }).catch(e=>{
+        const error = new Error(e);
+        error.httpStatus = '500'
+        next(error)
+    })
 }
 
 
@@ -167,7 +187,11 @@ exports.postOrder =(req,res,next)=>{
     .then(()=>{
         res.redirect('/orders');
     })
-    .catch(e=>console.log(e))
+    .catch(e=>{
+        const error = new Error(e);
+        error.httpStatus = '500'
+        next(error)
+    })
 }
 exports.getOrders =(req,res,next)=>{
     Order.find({'user.userId': req.user._id})
@@ -181,7 +205,11 @@ exports.getOrders =(req,res,next)=>{
 
         })
 
-    }).catch(e=>console.log(e))
+    }).catch(e=>{
+        const error = new Error(e);
+        error.httpStatus = '500'
+        next(error)
+    })
 }
 
         

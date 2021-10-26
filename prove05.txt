@@ -11,16 +11,17 @@ https://github.com/dastbal/CSE341-ECommerceApp
 
 3. Briefly list and describe the elements of the application that are functioning. 
 
-All that is explained in the video it is working, the connection with mongo, rhe orders and cart
-
+All that is explained in the video it is working
 
 4. Briefly describe any pieces of the assignment that are not yet working correctly.
 
-all is working
+
+my account  in sengrid was blocked beacuse I had the api in the  public repository, but it was working correctly
 
 5. Briefly describe the "coolest" thing you learned while completing this assignment.
 
-to know new package in npm awesomes that help us in the development 
+
+it was interesting to think what thing we can add to enhacend the project , and dificult
 6. If you could change this assignment to be more effective or helpful, what would you change?
 
 nothing
@@ -31,8 +32,6 @@ nothing
 
 8. Provide a brief justification (1-2 sentences) for selecting that category.
 
-I follow the videos using other theme 
-added two field to save the name and phone of the new user
-added the name of the user to the navigation wurh it is logged
+I added a comment model to add comment .   we can leave a comment if we are logged In  in the pizza detais. I need to add the name of the user in the comment I had get to do it I will try again
 
 
