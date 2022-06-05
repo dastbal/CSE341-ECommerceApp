@@ -14,7 +14,7 @@ This is a journal
 
 # Useful Websites
 
-* [Ionic Site]((https://ionic.io)
+* [Ionic Site](https://ionic.io)
 * [Ionic icons](https://ionic.io/ionicons)
 
 # Future Work
