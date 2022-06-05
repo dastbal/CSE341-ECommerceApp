@@ -11,12 +11,10 @@ This is a journal
 - Angular
 - Ionic
 
-{Describe the programming language that you used and any libraries.}
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
-* [Ionic Site]((https://ionic.io))
+* [Ionic Site]((https://ionic.io)
 * [Ionic icons](https://ionic.io/ionicons)
 
 # Future Work
